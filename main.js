@@ -267,9 +267,17 @@ console.log( 'The unique customers are:', uniqueCustomers );
   - There may be more than 1 'sale' that includes 5 or more items.
   - Individual transactions do not have either `name` or `numItems` properties, we'll have to add them to the output.
 */
-var bigSpenders;
+function bigSaleTransaction(transaction) {
+  if (transaction.items.length >= 5 && transaction.type === 'sale') {
+    return { name: transaction.customer, numOfItems: transaction.items.length };
+  }
+}
+var bigSpenders = transactions.filter(bigSaleTransaction).map(bigSaleTransaction).length;
 
-console.log( 'The "big spenders" are:', bigSpenders );
+var listLibSpenders = transactions.filter(bigSaleTransaction).map(bigSaleTransaction);
+
+console.log( 'The "big spenders" are:', bigSpenders);
+console.log( '=>', listLibSpenders);
 
 
 // --------------------------------------------------
