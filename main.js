@@ -134,6 +134,8 @@ function saleType(transaction) {
 }
 var numSales = transactions.filter(saleType).length;
 
+console.log( 'The total number of sales is:', numSales );
+
 /*
   Hey, welcome to the first question!
 
@@ -153,9 +155,6 @@ var numSales = transactions.filter(saleType).length;
   The breakdown above takes up a lot of space, feel free to move it to the top or bottom of the file!
 */
 
-console.log( 'The total number of sales is:', numSales );
-
-
 // --------------------------------------------------
 // QUESTION 02
 // --------------------------------------------------
@@ -163,6 +162,10 @@ console.log( 'The total number of sales is:', numSales );
   Calculate the total number of 'purchases'.
 */
 var numPurchases;
+function purchaseType(transaction) {
+  return transaction.type === 'purchase';
+}
+var numPurchases = transactions.filter(purchaseType).length;
 
 console.log( 'The total number of purchases is:', numPurchases );
 
