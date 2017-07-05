@@ -336,7 +336,13 @@ console.log( 'The sum of all purhcases is:', sumPurchases );
   HINT(S):
   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
 */
-var netProfit;
+function allSaleItems(transaction) {
+  return transaction.items.reduce(transactionTotal, 0);
+}
+function addPrices(sum, value) {
+  return value + sum;
+}
+var netProfit = transactions.filter(saleType).map(allSaleItems).reduce(addPrices, 0) - sumPurchases;
 
 console.log( 'The net profit is:', netProfit );
 
