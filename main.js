@@ -290,7 +290,11 @@ console.log( '=>', listLibSpenders);
   - Transactions don't have 'prices', but their 'items' do!
 */
 function sumTotalSales(transactions) {
-  return [transactions[0].items[0].price, transactions[0].items[1].price];
+  var array = [];
+  for(var i = 0; i < transactions[0].items.length; i++) {
+    array.push(transactions[0].items[i].price);
+  }
+  return array;
 }
 var sumSales = sumTotalSales(transactions).reduce(function(sum, value) {
   return sum + value;
@@ -309,19 +313,34 @@ console.log( 'The sum of all sales is:', sumSales );
   - Your solution to 'QUESTION 08' is a good starting point!
   - Make sure to include 'price' information from *all* purchases.
 */
-function allPurchaseItems(transaction) {
-  return transaction.items.reduce(transactionTotal, 0);
+function allPurchaseItems(transactions) {
+  return transactions.items.reduce(transactionTotal, 0);
 }
 function transactionTotal(sum, value) {
   return value.price + sum;
 }
-function addPrice(sum, value) {
+function addPrices(sum, value) {
   return (value * -1) + sum;
 }
-var sumPurchases = transactions.filter(purchaseType).map(allPurchaseItems).reduce(addPrice, 0);
+var sumPurchases = transactions.filter(purchaseType).map(allPurchaseItems).reduce(addPrices, 0)
 
 console.log( 'The sum of all purhcases is:', sumPurchases );
+/*
+SAME AS ABOVE:
+function allPurchaseItems(transactions) {
+  var array = [];
+  for(var i = 0; i < transactions.items.length; i++) {
+    array.push(transactions.items[i].price);
+  }
+  return array;
+}
+var purchases = transactions.filter(purchaseType)
+var items = purchases.map(purchase => purchase.items)
+var flatItems = [].concat.apply([], items)
+var allPurchases = flatItems.reduce((sum, item) => sum + item.price, 0)
 
+console.log( 'The sum of all purhcases is:', allPurchases );
+*/
 
 // --------------------------------------------------
 // QUESTION 10
@@ -336,13 +355,14 @@ console.log( 'The sum of all purhcases is:', sumPurchases );
   HINT(S):
   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
 */
+
 function allSaleItems(transaction) {
   return transaction.items.reduce(transactionTotal, 0);
 }
-function addPrices(sum, value) {
+function addAllPrices(sum, value) {
   return value + sum;
 }
-var netProfit = transactions.filter(saleType).map(allSaleItems).reduce(addPrices, 0) - sumPurchases;
+var netProfit = transactions.filter(saleType).map(allSaleItems).reduce(addAllPrices, 0)- sumPurchases;
 
 console.log( 'The net profit is:', netProfit );
 
@@ -356,7 +376,15 @@ console.log( 'The net profit is:', netProfit );
   HINTS:
   - The result of this calculation should be a number (not an array, object, or other data type).
 */
-var mostItems;
+function allItems(transaction) {
+  if (saleType(transaction)) {
+    return transaction.items.length;
+  }
+}
+function compareTransactions(value1, value2) {
+  return Math.max(value1, value2);
+}
+var mostItems = transactions.filter(allItems).map(allItems).reduce(compareTransactions, 0);
 
 console.log( 'The most items sold in a single transaction is:', mostItems );
 
