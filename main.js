@@ -310,9 +310,9 @@ console.log( 'The sum of all sales is:', sumSales );
   - Make sure to include 'price' information from *all* purchases.
 */
 function allPurchaseItems(transaction) {
-  return transaction.items.reduce(sumAllPurchase, 0);
+  return transaction.items.reduce(transactionTotal, 0);
 }
-function sumAllPurchase(sum, value) {
+function transactionTotal(sum, value) {
   return value.price + sum;
 }
 function addPrice(sum, value) {
