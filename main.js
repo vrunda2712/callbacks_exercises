@@ -289,7 +289,12 @@ console.log( '=>', listLibSpenders);
   HINT(S):
   - Transactions don't have 'prices', but their 'items' do!
 */
-var sumSales;
+function sumTotalSales(transactions) {
+  return [transactions[0].items[0].price, transactions[0].items[1].price];
+}
+var sumSales = sumTotalSales(transactions).reduce(function(sum, value) {
+  return sum + value;
+}, 0);
 
 console.log( 'The sum of all sales is:', sumSales );
 
